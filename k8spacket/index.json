@@ -3,7 +3,9 @@
   "description": "Uses a two node Kubernetes cluster with k8spacket installed",
   "details": {
     "intro": {
-      "text": "intro.md"
+      "text": "intro.md",
+      "foreground": "foreground.sh",
+      "background": "background.sh"
     },
     "finish": {
       "text": "finish.md"
