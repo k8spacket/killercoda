@@ -7,6 +7,9 @@ promtail:
 fluent-bit:
   enabled: false
 
+alertmanager:
+  enabled: false
+
 grafana:
   enabled: true
   sidecar:
@@ -52,27 +55,22 @@ grafana:
 
 prometheus:
   enabled: true
+  service:
+    type: NodePort
+    nodePort: 31401
   kube-state-metrics:
     rbac:
       create: false
-  alertmanager:
-    persistentVolume:
-      enabled: false
-  server:
-    service:
-      type: NodePort
-      nodePort: 31401
-    persistentVolume:
-      enabled: false
-  extraScrapeConfigs: |
-    - job_name: "k8spacket-metrics"
-      metrics_path: /metrics
-      scrape_interval: 25s
-      kubernetes_sd_configs:
-        - role: node
-      relabel_configs:
-        - source_labels: [ __address__ ]
-          action: replace
-          regex: ([^:]+):.*
-          replacement: $1:6676
-          target_label: __address__
+  prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: "k8spacket-metrics"
+        metrics_path: /metrics
+        scrape_interval: 25s
+        kubernetes_sd_configs:
+          - role: node
+        relabel_configs:
+          - source_labels: [ __address__ ]
+            action: replace
+            regex: ([^:]+):.*
+            replacement: $1:6676
+            target_label: __address__
