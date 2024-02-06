@@ -1,0 +1,78 @@
+loki:
+  enabled: false
+
+promtail:
+  enabled: false
+
+fluent-bit:
+  enabled: false
+
+grafana:
+  enabled: true
+  sidecar:
+    dashboards:
+      enabled: true
+  image:
+    tag: 9.5.13
+  service:
+    type: NodePort
+    nodePort: 31400
+  env:
+    GF_INSTALL_PLUGINS: hamedkarbasi93-nodegraphapi-datasource,marcusolsson-json-datasource,marcusolsson-dynamictext-panel
+  datasources:
+    nodegraphapi-plugin-datasource.yaml:
+      apiVersion: 1
+      datasources:
+        - name: "Node Graph API"
+          jsonData:
+            url: "http://k8spacket.k8spacket.svc.cluster.local:8080/nodegraph"
+          access: "proxy"
+          basicAuth: false
+          isDefault: false
+          readOnly: false
+          type: "hamedkarbasi93-nodegraphapi-datasource"
+          typeLogoUrl: "public/plugins/hamedkarbasi93-nodegraphapi-datasource/img/logo.svg"
+          typeName: "node-graph-plugin"
+          orgId: 1
+          version: 1
+    marcusolsson-json-datasource.yaml:
+      apiVersion: 1
+      datasources:
+        - name: "JSON API"
+          url: "http://k8spacket.k8spacket.svc.cluster.local:8080/tlsparser/api/data"
+          access: "proxy"
+          basicAuth: false
+          isDefault: false
+          readOnly: false
+          type: "marcusolsson-json-datasource"
+          typeLogoUrl: "public/plugins/marcusolsson-json-datasource/img/logo.svg"
+          typeName: "json-api-plugin"
+          orgId: 1
+          version: 1
+
+prometheus:
+  enabled: true
+  kube-state-metrics:
+    rbac:
+      create: false
+  alertmanager:
+    persistentVolume:
+      enabled: false
+  server:
+    service:
+      type: NodePort
+      nodePort: 31401
+    persistentVolume:
+      enabled: false
+  extraScrapeConfigs: |
+    - job_name: "k8spacket-metrics"
+      metrics_path: /metrics
+      scrape_interval: 25s
+      kubernetes_sd_configs:
+        - role: node
+      relabel_configs:
+        - source_labels: [ __address__ ]
+          action: replace
+          regex: ([^:]+):.*
+          replacement: $1:6676
+          target_label: __address__
