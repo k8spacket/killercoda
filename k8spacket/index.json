@@ -1,9 +1,12 @@
 {
-  "title": "Kubernetes 2node multi-step verification",
-  "description": "Uses a two node Kubernetes cluster and performs user input verification in all steps",
+  "title": "k98spacket demo",
+  "description": "Uses a two node Kubernetes cluster with k8spacket installed",
   "details": {
     "intro": {
       "text": "intro.md"
+    },
+    "finish": {
+      "text": "finish.md"
     }
   },
   "backend": {
