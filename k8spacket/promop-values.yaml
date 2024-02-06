@@ -10,6 +10,18 @@ fluent-bit:
 alertmanager:
   enabled: false
 
+nodeExporter:
+  enabled: false
+
+kubernetesServiceMonitors:
+  enabled: false
+
+kubeApiServer:
+  enabled: false
+
+kubelet:
+  enabled: false
+
 grafana:
   enabled: true
   sidecar:
