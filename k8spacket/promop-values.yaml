@@ -25,7 +25,29 @@ kubelet:
 kubeStateMetrics:
   enabled: false
 
+coreDns:
+  enabled: false
+
+kubeEtcd:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeProxy:
+  enabled: false
+
+kubeControllerManager:
+  enabled: false
+
 grafana:
+  grafana.ini:
+    auth.anonymous:
+      enabled: true
+      org_name: Main Org.
+      org_role: Admin
+    auth:
+      disable_login_form: true
   enabled: true
   sidecar:
     dashboards:
