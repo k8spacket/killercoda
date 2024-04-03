@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: proxy-app
-          image: k8spacket/python-app-tls:1.1
+          image: k8spacket/python-app-tls:1.2
           imagePullPolicy: Always
           ports:
             - containerPort: 8443
