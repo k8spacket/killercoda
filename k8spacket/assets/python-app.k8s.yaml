@@ -1,0 +1,239 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: example
+  name: proxy-app
+  labels:
+    app: proxy-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proxy-app
+  template:
+    metadata:
+      labels:
+        app: proxy-app
+    spec:
+      containers:
+        - name: proxy-app
+          image: k8spacket/python-app-tls
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8443
+          resources:
+            requests:
+              memory: "50Mi"
+              cpu: "50m"
+            limits:
+              memory: "300Mi"
+              cpu: "100m"
+          env:
+            - name: SERVICE_URL
+              value: https://web-app.example.svc.cluster.local:8443
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: example
+  name: proxy-app
+spec:
+  type: ClusterIP
+  selector:
+    app: proxy-app
+  ports:
+    - protocol: TCP
+      port: 8443
+      targetPort: 8443
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: example
+  name: web-app
+  labels:
+    app: web-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-app
+  template:
+    metadata:
+      labels:
+        app: web-app
+    spec:
+      containers:
+        - name: web-app
+          image: k8spacket/python-app-tls
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8443
+          resources:
+            requests:
+              memory: "50Mi"
+              cpu: "50m"
+            limits:
+              memory: "300Mi"
+              cpu: "100m"
+          env:
+            - name: SERVICE_URL
+              value: https://frontend-app.example.svc.cluster.local:8443
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: example
+  name: web-app
+spec:
+  type: ClusterIP
+  selector:
+    app: web-app
+  ports:
+    - protocol: TCP
+      port: 8443
+      targetPort: 8443
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: example
+  name: frontend-app
+  labels:
+    app: frontend-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-app
+  template:
+    metadata:
+      labels:
+        app: frontend-app
+    spec:
+      containers:
+        - name: frontend-app
+          image: k8spacket/python-app-tls
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8443
+          resources:
+            requests:
+              memory: "50Mi"
+              cpu: "50m"
+            limits:
+              memory: "300Mi"
+              cpu: "100m"
+          env:
+            - name: SERVICE_URL
+              value: https://backend-app.example.svc.cluster.local:8443
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: example
+  name: frontend-app
+spec:
+  type: ClusterIP
+  selector:
+    app: frontend-app
+  ports:
+    - protocol: TCP
+      port: 8443
+      targetPort: 8443
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: example
+  name: backend-app
+  labels:
+    app: backend-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-app
+  template:
+    metadata:
+      labels:
+        app: backend-app
+    spec:
+      containers:
+        - name: backend-app
+          image: k8spacket/python-app-tls
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8443
+          resources:
+            requests:
+              memory: "50Mi"
+              cpu: "50m"
+            limits:
+              memory: "300Mi"
+              cpu: "100m"
+          env:
+            - name: SERVICE_URL
+              value: https://db-app.example.svc.cluster.local:8443
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: example
+  name: backend-app
+spec:
+  type: ClusterIP
+  selector:
+    app: backend-app
+  ports:
+    - protocol: TCP
+      port: 8443
+      targetPort: 8443
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: example
+  name: db-app
+  labels:
+    app: db-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-app
+  template:
+    metadata:
+      labels:
+        app: db-app
+    spec:
+      containers:
+        - name: db-app
+          image: k8spacket/python-app-tls
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8443
+          resources:
+            requests:
+              memory: "50Mi"
+              cpu: "50m"
+            limits:
+              memory: "300Mi"
+              cpu: "100m"
+          env:
+            - name: SERVICE_URL
+              value: ""
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: example
+  name: db-app
+spec:
+  type: ClusterIP
+  selector:
+    app: db-app
+  ports:
+    - protocol: TCP
+      port: 8443
+      targetPort: 8443

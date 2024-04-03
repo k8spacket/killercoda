@@ -6,6 +6,11 @@
       "text": "intro.md",
       "foreground": "foreground.sh",
       "background": "background.sh"
+    },
+    "assets": {
+      "host01": [
+        {"file": "**/*.*", "target": "~/"}
+      ]
     }
   },
   "backend": {
