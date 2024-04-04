@@ -5,7 +5,6 @@ What is k8spacket?
 It is the tool to collect information about TCP traffic and TLS connection metadata in the Kubernetes cluster using eBPF and visualize it in Grafana.
 <br/> <a style="text-decoration:none;float:right;font-size:16px;" href="https://github.com/k8spacket">
 <span style="color:grey;"> View on GitHub </span>
-<img src="./github-mark.svg" width="16">
 </a>
 <br/>
 Use Grafana dashboards below to see how it works
