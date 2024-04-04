@@ -65,7 +65,7 @@ data:
               "datasource": "Prometheus",
               "editorMode": "code",
               "exemplar": false,
-              "expr": "sort(min(k8s_packet_tls_cert_expiry{domain!=\"\"} and rate(k8s_packet_tls_cert_expiry_count{domain!=\"\"}[$past_interval]) > 0) by (domain)\n    or\n    min(k8s_packet_tls_cert_expiry{domain=\"\"} and rate(k8s_packet_tls_cert_expiry_count{domain=\"\"}[$past_interval]) > 0) by (dst)\n)",
+              "expr": "sort(\n    min(min_over_time(k8s_packet_tls_cert_expiry{domain!=\"\"}[$past_interval]) and min_over_time(k8s_packet_tls_cert_expiry_count{domain!=\"\"}[$past_interval]) > 0) by (domain)\n    or\n    min(min_over_time(k8s_packet_tls_cert_expiry{domain=\"\"}[$past_interval]) and min_over_time(k8s_packet_tls_cert_expiry_count{domain=\"\"}[$past_interval]) > 0) by (dst)\n)",
               "format": "time_series",
               "instant": true,
               "interval": "",
@@ -154,6 +154,6 @@ data:
       "timezone": "",
       "title": "k8spacket - TLS certificate expiration",
       "uid": "a730b0a6-b02e-4c48-957b-dd8174aef06e",
-      "version": 14,
+      "version": 15,
       "weekStart": ""
     }

@@ -265,3 +265,26 @@ spec:
                 - -c
                 - i=0; while [ $i -lt 5 ]; do curl https://proxy-app.example.svc.cluster.local:8443 -X POST -k ; sleep 10 ; i=`expr $i + 1`; done
           restartPolicy: OnFailure
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: initial-curls
+spec:
+  template:
+    spec:
+      containers:
+        - name: initial-curls
+          image: curlimages/curl
+          command: [ "sh", "-c" ]
+          args:
+          - |
+            sleep 20
+            curl https://login.microsoftonline.com
+            curl https://management.azure.com
+            curl https://raw.githubusercontent.com
+            curl https://letsencrypt.org
+            curl https://ebpf.io
+            curl https://signin.aws.amazon.com
+            curl https://k8spacket.github.io
+      restartPolicy: OnFailure
