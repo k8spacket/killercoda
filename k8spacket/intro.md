@@ -1,7 +1,3 @@
-<br>
-
-### Let's learn some Kubernetes - k8spacket
-
 <img src="./k8spacket-and-ebpf2.png" alt="k8spacket-and-ebpf2.png">
 
 What is k8spacket? 

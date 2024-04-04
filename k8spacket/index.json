@@ -1,5 +1,5 @@
 {
-  "title": "This is a k8spacket tool demo",
+  "title": "k8spacket",
   "description": "Uses a two node Kubernetes cluster with k8spacket installed",
   "details": {
     "intro": {
