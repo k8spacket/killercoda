@@ -245,21 +245,26 @@ spec:
       targetPort: 8443
 ---
 apiVersion: batch/v1
-kind: Job
+kind: CronJob
 metadata:
   name: ping-pong
 spec:
-  template:
+  schedule: "* * * * *"
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 1
+  jobTemplate:
     spec:
-      containers:
-        - name: ping-pong
-          image: curlimages/curl
-          imagePullPolicy: IfNotPresent
-          command:
-            - /bin/sh
-            - -c
-            - while true; do curl https://proxy-app.example.svc.cluster.local:8443 -X POST -k; sleep 10; done
-      restartPolicy: OnFailure
+      template:
+        spec:
+          containers:
+            - name: ping-pong
+              image: curlimages/curl
+              imagePullPolicy: IfNotPresent
+              command:
+                - /bin/sh
+                - -c
+                - i=0; while [ $i -lt 5 ]; do curl https://proxy-app.example.svc.cluster.local:8443 -X POST -k ; sleep 10 ; i=`expr $i + 1`; done
+          restartPolicy: OnFailure
 ---
 apiVersion: batch/v1
 kind: Job
