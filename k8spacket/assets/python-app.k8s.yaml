@@ -1,7 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app
+  labels:
+    name: app
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: example
+  namespace: app
   name: proxy-app
   labels:
     app: proxy-app
@@ -41,7 +48,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: example
+  namespace: app
   name: proxy-app
 spec:
   type: ClusterIP
@@ -55,12 +62,12 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: example
+  namespace: app
   name: web-app
   labels:
     app: web-app
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app: web-app
@@ -89,7 +96,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: example
+  namespace: app
   name: web-app
 spec:
   type: ClusterIP
@@ -103,12 +110,12 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: example
+  namespace: app
   name: frontend-app
   labels:
     app: frontend-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: frontend-app
@@ -137,7 +144,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: example
+  namespace: app
   name: frontend-app
 spec:
   type: ClusterIP
@@ -151,12 +158,12 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: example
+  namespace: app
   name: backend-app
   labels:
     app: backend-app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: backend-app
@@ -185,7 +192,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: example
+  namespace: app
   name: backend-app
 spec:
   type: ClusterIP
@@ -199,7 +206,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: example
+  namespace: app
   name: db-app
   labels:
     app: db-app
@@ -233,7 +240,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: example
+  namespace: app
   name: db-app
 spec:
   type: ClusterIP
@@ -247,6 +254,7 @@ spec:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
+  namespace: app
   name: ping-pong
 spec:
   schedule: "* * * * *"
@@ -266,9 +274,17 @@ spec:
                 - i=0; while [ $i -lt 5 ]; do curl https://proxy-app.example.svc.cluster.local:8443 -X POST -k ; sleep 10 ; i=`expr $i + 1`; done
           restartPolicy: OnFailure
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: example
+  labels:
+    name: example
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
+  namespace: example
   name: initial-curls
 spec:
   template:

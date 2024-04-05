@@ -16,7 +16,6 @@ kubectl -n monitoring apply --recursive -f ./dashboards
 
 kubectl taint node controlplane node-role.kubernetes.io/control-plane:NoSchedule
 
-kubectl create namespace example
-kubectl -n example apply -f python-app.k8s.yaml
+kubectl apply -f python-app.k8s.yaml
 
 touch /tmp/finished
