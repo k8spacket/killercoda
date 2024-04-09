@@ -1,6 +1,6 @@
 {
   "title": " k8spacket ",
-  "description": "Uses a two node Kubernetes cluster with k8spacket installed",
+  "description": "Try k8spacket on Kubernetes cluster with two nodes",
   "details": {
     "intro": {
       "text": "intro.md",
