@@ -1,3 +1,9 @@
+#!/bin/bash
+
+rm $0
+
+clear
+
 echo "Installing tools..."
 while [ ! -f /tmp/finished ]; do sleep 1; done
 

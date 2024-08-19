@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#set -x # to test stderr output in /var/log/killercoda
-
 kubectl taint node controlplane node-role.kubernetes.io/control-plane:NoSchedule-
 
 helm repo add k8spacket https://k8spacket.github.io/k8spacket-helm-chart
