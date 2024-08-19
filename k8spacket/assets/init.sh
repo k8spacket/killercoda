@@ -4,8 +4,14 @@ rm $0
 
 clear
 
-echo "Installing tools..."
-while [ ! -f /tmp/finished ]; do sleep 1; done
+echo -n "Installing tools..."
+while [ ! -f /tmp/finished ]; do
+    echo -n '.'
+    sleep 1;
+done;
+echo " done"
+
+echo
 
 cat << "EOF"
 8 888888888o.   8 8888888888            .8.          8 888888888o.    `8.`8888.      ,8'
