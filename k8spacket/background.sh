@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x # to test stderr output in /var/log/killercoda
+#set -x # to test stderr output in /var/log/killercoda
 
 kubectl taint node controlplane node-role.kubernetes.io/control-plane:NoSchedule-
 
@@ -16,6 +16,10 @@ kubectl -n monitoring apply --recursive -f ./dashboards
 
 kubectl taint node controlplane node-role.kubernetes.io/control-plane:NoSchedule
 
+kubectl -n monitoring wait --for=condition=Ready pod -l app.kubernetes.io/name=grafana
+
 kubectl apply -f python-app.k8s.yaml
+
+kubectl -n init wait --for=condition=complete job/initial-curls
 
 touch /tmp/finished
