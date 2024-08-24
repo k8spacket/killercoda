@@ -5,9 +5,6 @@ helm repo add k8spacket https://k8spacket.github.io/k8spacket-helm-chart
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 
-kubectl create namespace init
-kubectl create namespace monitoring
-
 helm install promop --namespace monitoring prometheus-community/kube-prometheus-stack --create-namespace -f ./promop-values.yaml \
   && kubectl -n monitoring apply --recursive -f ./dashboards \
   && kubectl -n monitoring wait --for=condition=Ready pod -l app.kubernetes.io/name=grafana &
