@@ -49,9 +49,10 @@ grafana:
     auth:
       disable_login_form: true
   enabled: true
+  defaultDashboardsEnabled: false
   sidecar:
     dashboards:
-      enabled: true
+      enabled: false
   image:
     tag: 11.1.4
   service:
