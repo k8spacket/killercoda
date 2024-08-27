@@ -49,11 +49,12 @@ grafana:
     auth:
       disable_login_form: true
   enabled: true
+  defaultDashboardsEnabled: false
   sidecar:
     dashboards:
       enabled: true
   image:
-    tag: 10.4.1
+    tag: 11.1.4
   service:
     type: NodePort
     nodePort: 31400
@@ -99,17 +100,8 @@ prometheus:
     rbac:
       create: false
   prometheusSpec:
+    serviceMonitorSelector:
+      matchLabels:
+        app.kubernetes.io/name: k8spacket
     image:
-      tag: v2.51.1
-    additionalScrapeConfigs:
-      - job_name: "k8spacket-metrics"
-        metrics_path: /metrics
-        scrape_interval: 25s
-        kubernetes_sd_configs:
-          - role: node
-        relabel_configs:
-          - source_labels: [ __address__ ]
-            action: replace
-            regex: ([^:]+):.*
-            replacement: $1:6676
-            target_label: __address__
+      tag: v2.54.0
