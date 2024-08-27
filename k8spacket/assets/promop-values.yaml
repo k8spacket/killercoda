@@ -52,7 +52,7 @@ grafana:
   defaultDashboardsEnabled: false
   sidecar:
     dashboards:
-      enabled: false
+      enabled: true
   image:
     tag: 11.1.4
   service:
