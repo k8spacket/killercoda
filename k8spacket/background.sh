@@ -6,7 +6,7 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo update
 
 echo "Installing Monitoring stack ..." \
-helm install promop --namespace monitoring prometheus-community/kube-prometheus-stack --create-namespace -f ./promop-values.yaml \
+  && helm install promop --namespace monitoring prometheus-community/kube-prometheus-stack --create-namespace -f ./promop-values.yaml \
   && kubectl -n monitoring apply --recursive -f ./dashboards \
   && kubectl -n monitoring wait --for=condition=Ready pod -l app.kubernetes.io/name=grafana \
   && echo "Monitoring stack ready" &
