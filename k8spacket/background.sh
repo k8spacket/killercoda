@@ -14,8 +14,8 @@ echo "Installing Monitoring stack ..." \
 echo "Installing k8spacket ..." \
   && while ! kubectl -n monitoring get crd/servicemonitors.monitoring.coreos.com ;do echo "waiting for crd/servicemonitors.monitoring.coreos.com"; sleep 1; done \
   && kubectl taint node controlplane node-role.kubernetes.io/control-plane:NoSchedule- \
-  && helm install k8spacket --namespace k8spacket k8spacket/k8spacket --create-namespace --version 2.0.6 \
-     --set image.tag="2.0.5-kernel5.4a" \
+  && helm install k8spacket --namespace k8spacket k8spacket/k8spacket --create-namespace --version 2.1.0 \
+     --set image.tag="2.1.0-kernel5.4a" \
      --set serviceMonitor.enabled="true" \
      --set containerPorts[0].name="metrics" \
      --set containerPorts[0].containerPort="6676" \
