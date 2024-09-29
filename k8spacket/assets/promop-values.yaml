@@ -103,5 +103,6 @@ prometheus:
     serviceMonitorSelector:
       matchLabels:
         app.kubernetes.io/name: k8spacket
+        release: null
     image:
       tag: v2.54.0
