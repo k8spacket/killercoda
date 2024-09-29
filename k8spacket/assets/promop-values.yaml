@@ -100,6 +100,7 @@ prometheus:
     rbac:
       create: false
   prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelector:
       matchLabels:
         app.kubernetes.io/name: k8spacket
