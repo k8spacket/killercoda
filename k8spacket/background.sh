@@ -8,13 +8,7 @@ helm repo update
 echo "Installing Monitoring stack ..." \
   && helm install promop --namespace monitoring prometheus-community/kube-prometheus-stack --create-namespace -f ./promop-values.yaml \
   && kubectl -n monitoring apply --recursive -f ./dashboards \
-  && kubectl -n monitoring wait --for=condition=Ready pod -l app.kubernetes.io/name=grafana --timeout=120s \
-  && while [ $RES -ne 200 ]; \
-     do \
-      RES=$(curl -m 2 -s -o /dev/null -w "%{http_code}" http://$(kubectl -n monitoring get pod -l app.kubernetes.io/name=grafana -o jsonpath='{.items[0].status.podIP}'):3000); \
-      echo "Monitoring stack is not ready yet. Status: ${RES}"
-      sleep 1; \
-    done \
+  && kubectl -n monitoring wait --for=condition=Ready pod -l app.kubernetes.io/name=grafana --timeout=300s \
   && echo "Monitoring stack ready" &
 
 echo "Installing k8spacket ..." \
@@ -28,7 +22,7 @@ echo "Installing k8spacket ..." \
   && kubectl -n k8spacket rollout status daemonset k8spacket \
   && kubectl taint node controlplane node-role.kubernetes.io/control-plane:NoSchedule \
   && kubectl apply -f python-app.k8s.yaml \
-  && kubectl -n init wait --for=condition=complete job/initial-curls --timeout=120s \
+  && kubectl -n init wait --for=condition=complete job/initial-curls --timeout=300s \
   && echo "k8spacket ready" &
 
 wait < <(jobs -p)
