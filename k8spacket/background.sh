@@ -9,6 +9,11 @@ echo "Installing Monitoring stack ..." \
   && helm install promop --namespace monitoring prometheus-community/kube-prometheus-stack --create-namespace -f ./promop-values.yaml \
   && kubectl -n monitoring apply --recursive -f ./dashboards \
   && kubectl -n monitoring wait --for=condition=Ready pod -l app.kubernetes.io/name=grafana \
+  && while [ $RES -ne 200 ]; \
+     do \
+      RES=$(curl -m 2 -s -o /dev/null -w "%{http_code}" http://$(kubectl -n monitoring get pod -l app.kubernetes.io/name=grafana -o jsonpath='{.items[0].status.podIP}'):3000); \
+      sleep 1; \
+    done \
   && echo "Monitoring stack ready" &
 
 echo "Installing k8spacket ..." \
