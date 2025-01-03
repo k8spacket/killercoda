@@ -48,6 +48,8 @@ grafana:
       org_role: Admin
     auth:
       disable_login_form: true
+    analytics:
+      google_analytics_4_id: G-1BN3NP93F6
   enabled: true
   defaultDashboardsEnabled: false
   sidecar:
