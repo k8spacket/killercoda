@@ -55,8 +55,6 @@ grafana:
   sidecar:
     dashboards:
       enabled: true
-  image:
-    tag: 11.1.4
   service:
     type: NodePort
     nodePort: 31400
@@ -106,5 +104,3 @@ prometheus:
       matchLabels:
         app.kubernetes.io/name: k8spacket
         release: null
-    image:
-      tag: v2.54.0
