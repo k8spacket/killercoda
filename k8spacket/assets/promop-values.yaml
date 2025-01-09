@@ -49,7 +49,7 @@ grafana:
     auth:
       disable_login_form: true
     analytics:
-      google_analytics_4_id: G-1BN3NP93F6
+      google_analytics_4_id: G-6SWTZXYQ20
   enabled: true
   defaultDashboardsEnabled: false
   sidecar:
