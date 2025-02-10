@@ -1,0 +1,12 @@
+{
+  "title": " ubuntu-rapid ",
+  "description": "Try ubuntu rapid",
+  "details": {
+    "intro": {
+      "text": "intro.md"
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu-4GB-rapid"
+  }
+}
