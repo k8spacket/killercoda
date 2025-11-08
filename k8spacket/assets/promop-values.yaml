@@ -47,7 +47,7 @@ grafana:
       org_name: Main Org.
       org_role: Admin
     auth:
-      disable_login_form: true
+      disable_login_form: false
     analytics:
       google_analytics_4_id: G-6SWTZXYQ20
   enabled: true
